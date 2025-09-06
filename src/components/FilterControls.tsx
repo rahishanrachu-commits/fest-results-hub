@@ -24,23 +24,23 @@ export const FilterControls = ({
   teams,
 }: FilterControlsProps) => {
   return (
-    <div className="glass-morphism rounded-2xl shadow-glass border p-6 mb-8 animate-fade-in">
+    <div className="bg-card rounded-xl shadow-card border p-6 mb-8">
       <div className="flex flex-col lg:flex-row gap-4">
-        <div className="flex-1 relative group">
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 transition-colors group-focus-within:text-primary" />
+        <div className="flex-1 relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input
             placeholder="Search participants, teams, or programs..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-12 h-14 text-lg border-border focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 bg-background/50 backdrop-blur-sm rounded-xl"
+            className="pl-10 h-12 text-lg border-border focus:ring-primary"
           />
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4">
-          <div className="min-w-[220px]">
+          <div className="min-w-[200px]">
             <Select value={selectedCategory} onValueChange={onCategoryChange}>
-              <SelectTrigger className="h-14 border-border bg-background/50 backdrop-blur-sm rounded-xl transition-all duration-300 hover:shadow-md">
-                <div className="flex items-center gap-3">
+              <SelectTrigger className="h-12 border-border">
+                <div className="flex items-center gap-2">
                   <Filter className="h-4 w-4 text-muted-foreground" />
                   <SelectValue placeholder="All Categories" />
                 </div>
@@ -56,10 +56,10 @@ export const FilterControls = ({
             </Select>
           </div>
 
-          <div className="min-w-[220px]">
+          <div className="min-w-[200px]">
             <Select value={selectedTeam} onValueChange={onTeamChange}>
-              <SelectTrigger className="h-14 border-border bg-background/50 backdrop-blur-sm rounded-xl transition-all duration-300 hover:shadow-md">
-                <div className="flex items-center gap-3">
+              <SelectTrigger className="h-12 border-border">
+                <div className="flex items-center gap-2">
                   <Filter className="h-4 w-4 text-muted-foreground" />
                   <SelectValue placeholder="All Teams" />
                 </div>
