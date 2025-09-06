@@ -11,9 +11,9 @@ import { Trophy, Settings, ExternalLink } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 const Index = () => {
-  // Default URL - replace with your Google Apps Script URL
-  const [webappUrl, setWebappUrl] = useState('');
-  const [isConfigured, setIsConfigured] = useState(false);
+  // Default URL - using the provided Google Apps Script URL
+  const [webappUrl, setWebappUrl] = useState('https://script.google.com/macros/s/AKfycbzYuQKwLM-z4iT8qemGv3r2HLGjDK-fiH6Hs04JbUkhrXsVAi4hB30VjTHml68FNFj6aA/exec');
+  const [isConfigured, setIsConfigured] = useState(true);
   
   const { data, loading, error, refetch } = useResultsData({ 
     webappUrl: isConfigured ? webappUrl : '' 
