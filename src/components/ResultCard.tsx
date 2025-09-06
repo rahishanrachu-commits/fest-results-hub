@@ -1,6 +1,5 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Trophy, Users, Award } from "lucide-react";
 
 interface ResultEntry {
   position: string;
@@ -15,112 +14,77 @@ interface ResultEntry {
 
 interface ResultCardProps {
   programCode: string;
-  programName: string;
+  programName:string;
   programSection: string;
   entries: ResultEntry[];
 }
 
-const getGradeBadgeVariant = (grade: string): "default" | "secondary" | "destructive" => {
-  switch (grade.toUpperCase()) {
-    case 'A': return "default";
-    case 'B': return "secondary"; 
-    case 'C': return "destructive";
-    default: return "secondary";
-  }
-};
-
 const getGradeColor = (grade: string): string => {
   switch (grade.toUpperCase()) {
-    case 'A': return "bg-grade-a/10 text-grade-a border-grade-a/20";
-    case 'B': return "bg-grade-b/10 text-grade-b border-grade-b/20";
-    case 'C': return "bg-grade-c/10 text-grade-c border-grade-c/20";
-    default: return "bg-grade-default/10 text-grade-default border-grade-default/20";
-  }
-};
-
-const getPositionIcon = (position: string) => {
-  switch (position) {
-    case '1': return <Trophy className="h-5 w-5 text-yellow-500" />;
-    case '2': return <Award className="h-5 w-5 text-gray-400" />;
-    case '3': return <Award className="h-5 w-5 text-amber-600" />;
-    default: return null;
+    case 'A': return "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/50 dark:text-green-300 dark:border-green-700/50";
+    case 'B': return "bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/50 dark:text-blue-300 dark:border-blue-700/50";
+    case 'C': return "bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/50 dark:text-yellow-300 dark:border-yellow-700/50";
+    default: return "bg-muted text-muted-foreground border-border";
   }
 };
 
 export const ResultCard = ({ programCode, programName, programSection, entries }: ResultCardProps) => {
   return (
-    <Card className="overflow-hidden shadow-card hover:shadow-elegant transition-all duration-500 hover:-translate-y-2 border-border/50 backdrop-blur-sm bg-card/80">
-      <CardHeader className="bg-gradient-card text-primary-foreground p-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-        <div className="flex items-center space-x-3">
-          <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm border border-white/20">
-            <Users className="h-6 w-6" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <h2 className="text-xl font-bold tracking-wide truncate">{programName}</h2>
-            <p className="text-primary-foreground/90 text-sm font-medium">
+    <div className="group rounded-lg h-full">
+      <div className="gradient-border rounded-lg h-full">
+        <Card className="overflow-hidden transition-all duration-300 flex flex-col h-full group-hover:-translate-y-1 p-4">
+          <div className="mb-4">
+            <h3 className="text-lg font-bold tracking-tight text-foreground">{programName}</h3>
+            <p className="text-sm font-semibold uppercase tracking-wider bg-gradient-primary bg-clip-text text-transparent">
               {programCode} • {programSection}
             </p>
           </div>
-          <div className="status-indicator">
-            <Badge variant="secondary" className="bg-white/20 text-white border-white/30 backdrop-blur-sm">
-              {entries.length} Results
-            </Badge>
-          </div>
-        </div>
-      </CardHeader>
-      
-      <CardContent className="p-0">
-        <div className="overflow-x-auto scrollbar-thin">
-          <table className="w-full text-sm relative">
-            <thead className="bg-gradient-to-r from-muted/30 to-muted/50 border-b border-border/50 backdrop-blur-sm">
-              <tr>
-                <th className="px-4 py-4 text-left font-semibold text-muted-foreground text-xs uppercase tracking-wider">Pos</th>
-                <th className="px-4 py-4 text-left font-semibold text-muted-foreground text-xs uppercase tracking-wider">Chest No</th>
-                <th className="px-4 py-4 text-left font-semibold text-muted-foreground text-xs uppercase tracking-wider">Candidate</th>
-                <th className="px-4 py-4 text-left font-semibold text-muted-foreground text-xs uppercase tracking-wider">Team</th>
-                <th className="px-4 py-4 text-right font-semibold text-muted-foreground text-xs uppercase tracking-wider">Grade</th>
-              </tr>
-            </thead>
-            <tbody>
-              {entries.map((entry, index) => (
-                <tr 
+          
+          <div className="flex-1 space-y-3">
+            {entries.map((entry, index) => {
+              const position = entry.position;
+              let positionElement;
+
+              const positionClasses = "text-3xl sm:text-4xl font-black w-12 text-center flex-shrink-0";
+
+              if (position === '1') {
+                positionElement = <div className={`${positionClasses} bg-gradient-to-br from-yellow-400 to-amber-500 bg-clip-text text-transparent`}>1</div>;
+              } else if (position === '2') {
+                positionElement = <div className={`${positionClasses} bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-transparent`}>2</div>;
+              } else if (position === '3') {
+                positionElement = <div className={`${positionClasses} bg-gradient-to-br from-amber-500 to-orange-600 bg-clip-text text-transparent`}>3</div>;
+              } else if (position) {
+                positionElement = <div className={`${positionClasses} text-muted-foreground/50`}>{position}</div>;
+              } else {
+                positionElement = <div className="w-12 flex-shrink-0" />;
+              }
+
+              return (
+                <div 
                   key={`${entry.chestNo}-${index}`}
-                  className="border-b border-border/30 last:border-b-0 hover:bg-gradient-to-r hover:from-muted/20 hover:to-transparent transition-all duration-300 group"
+                  className="flex items-center gap-3"
                 >
-                  <td className="px-4 py-4">
-                    <div className="flex items-center gap-2">
-                      {getPositionIcon(entry.position)}
-                      <span className="font-bold text-lg text-primary group-hover:scale-110 transition-transform duration-200">
-                        {entry.position || '-'}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4 text-muted-foreground font-medium font-mono text-sm">
-                    {entry.chestNo}
-                  </td>
-                  <td className="px-4 py-4 font-semibold text-foreground">
-                    {entry.candidateName}
-                  </td>
-                  <td className="px-4 py-4 text-muted-foreground font-medium">
-                    {entry.teamCode}
-                  </td>
-                  <td className="px-4 py-4 text-right">
-                    {entry.grade && (
-                      <Badge 
-                        variant="outline"
-                        className={`font-semibold transition-all duration-200 hover:scale-110 ${getGradeColor(entry.grade)}`}
-                      >
-                        {entry.grade}
-                      </Badge>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
+                  {positionElement}
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-sm truncate">{entry.candidateName}</p>
+                    <p className="text-xs text-muted-foreground">
+                      Chest: {entry.chestNo} • Team: {entry.teamCode}
+                    </p>
+                  </div>
+                  {entry.grade && (
+                    <Badge 
+                      variant="outline" 
+                      className={`font-bold text-xs px-2 py-0.5 rounded-md ${getGradeColor(entry.grade)}`}
+                    >
+                      {entry.grade}
+                    </Badge>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </Card>
+      </div>
+    </div>
   );
 };

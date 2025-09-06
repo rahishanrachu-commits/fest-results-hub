@@ -24,57 +24,51 @@ export const FilterControls = ({
   teams,
 }: FilterControlsProps) => {
   return (
-    <div className="glass rounded-2xl shadow-elegant border border-border/50 p-6 mb-8 backdrop-blur-xl">
-      <div className="flex flex-col lg:flex-row gap-4">
-        <div className="flex-1 relative">
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5 transition-colors duration-200" />
-          <Input
-            placeholder="Search participants, teams, or programs..."
-            value={searchTerm}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-12 h-14 text-lg border-border/50 focus:ring-primary/50 focus:border-primary/50 bg-background/50 backdrop-blur-sm rounded-xl transition-all duration-300"
-          />
-        </div>
-        
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="min-w-[200px]">
-            <Select value={selectedCategory} onValueChange={onCategoryChange}>
-              <SelectTrigger className="h-14 border-border/50 bg-background/50 backdrop-blur-sm rounded-xl transition-all duration-300 hover:border-primary/30">
-                <div className="flex items-center gap-2">
-                  <Filter className="h-5 w-5 text-muted-foreground" />
-                  <SelectValue placeholder="All Categories" />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
-                {categories.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="md:col-span-1 relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+        <Input
+          placeholder="Search participants, teams..."
+          value={searchTerm}
+          onChange={(e) => onSearchChange(e.target.value)}
+          className="pl-10 h-10"
+        />
+      </div>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:col-span-2 gap-4">
+        <Select value={selectedCategory} onValueChange={onCategoryChange}>
+          <SelectTrigger className="h-10">
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-muted-foreground" />
+              <SelectValue placeholder="All Categories" />
+            </div>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Categories</SelectItem>
+            {categories.map((category) => (
+              <SelectItem key={category} value={category}>
+                {category}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-          <div className="min-w-[200px]">
-            <Select value={selectedTeam} onValueChange={onTeamChange}>
-              <SelectTrigger className="h-14 border-border/50 bg-background/50 backdrop-blur-sm rounded-xl transition-all duration-300 hover:border-primary/30">
-                <div className="flex items-center gap-2">
-                  <Filter className="h-5 w-5 text-muted-foreground" />
-                  <SelectValue placeholder="All Teams" />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Teams</SelectItem>
-                {teams.map((team) => (
-                  <SelectItem key={team} value={team}>
-                    {team}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+        <Select value={selectedTeam} onValueChange={onTeamChange}>
+          <SelectTrigger className="h-10">
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-muted-foreground" />
+              <SelectValue placeholder="All Teams" />
+            </div>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Teams</SelectItem>
+            {teams.map((team) => (
+              <SelectItem key={team} value={team}>
+                {team}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );

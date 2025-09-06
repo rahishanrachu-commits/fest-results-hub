@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# KHANDAQ '25
 
 ## Project info
 
