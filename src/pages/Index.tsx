@@ -144,42 +144,45 @@ const Index = () => {
 
   // Main application
   return (
-    <div className="min-h-screen bg-gradient-subtle">
-      {/* Pattern overlay */}
-      <div className="fixed inset-0 opacity-20 pointer-events-none">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30 relative overflow-hidden">
+      {/* Animated background pattern */}
+      <div className="fixed inset-0 opacity-30 pointer-events-none">
         <div 
-          className="w-full h-full"
+          className="w-full h-full animate-pulse"
           style={{
-            backgroundImage: 'radial-gradient(circle, hsl(238, 75%, 59%, 0.1) 1px, transparent 1px)',
-            backgroundSize: '24px 24px'
+            backgroundImage: `
+              radial-gradient(circle at 25% 25%, hsl(var(--primary) / 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 75% 75%, hsl(var(--accent) / 0.1) 0%, transparent 50%)
+            `,
+            backgroundSize: '100px 100px, 150px 150px'
           }}
         />
       </div>
 
       <div className="relative container mx-auto p-4 sm:p-6 lg:p-8">
         {/* Header */}
-        <header className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-primary rounded-xl mb-4">
-            <Trophy className="h-8 w-8 text-white" />
+        <header className="text-center mb-12 animate-fade-in">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-primary rounded-2xl mb-6 shadow-glass animate-glow">
+            <Trophy className="h-10 w-10 text-white" />
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold gradient-text mb-4 animate-slide-up">
             Fest Results
           </h1>
-          <p className="text-lg text-muted-foreground">
-            Live competition results from Google Sheets
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+            Live competition results with real-time updates from Google Sheets
           </p>
           
           {/* Stats */}
           {data.length > 0 && (
-            <div className="flex justify-center gap-4 mt-6">
-              <Badge variant="secondary" className="px-4 py-2 text-sm">
-                {Object.keys(groupedData).length} Programs
+            <div className="flex flex-wrap justify-center gap-4 mt-8 animate-scale-in">
+              <Badge variant="secondary" className="px-6 py-3 text-base font-semibold bg-gradient-secondary border-0 shadow-lg">
+                🏆 {Object.keys(groupedData).length} Programs
               </Badge>
-              <Badge variant="secondary" className="px-4 py-2 text-sm">
-                {filteredData.length} Results
+              <Badge variant="secondary" className="px-6 py-3 text-base font-semibold bg-gradient-secondary border-0 shadow-lg">
+                📊 {filteredData.length} Results
               </Badge>
-              <Badge variant="secondary" className="px-4 py-2 text-sm">
-                {teams.length} Teams
+              <Badge variant="secondary" className="px-6 py-3 text-base font-semibold bg-gradient-secondary border-0 shadow-lg">
+                👥 {teams.length} Teams
               </Badge>
             </div>
           )}
@@ -210,26 +213,33 @@ const Index = () => {
 
             {/* Results Grid */}
             {Object.keys(groupedData).length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {Object.entries(groupedData).map(([programCode, entries]) => {
+              <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8">
+                {Object.entries(groupedData).map(([programCode, entries], index) => {
                   const programInfo = entries[0];
                   return (
-                    <ResultCard
+                    <div 
                       key={programCode}
-                      programCode={programCode}
-                      programName={programInfo.programName}
-                      programSection={programInfo.programSection}
-                      entries={entries}
-                    />
+                      className="animate-fade-in"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <ResultCard
+                        programCode={programCode}
+                        programName={programInfo.programName}
+                        programSection={programInfo.programSection}
+                        entries={entries}
+                      />
+                    </div>
                   );
                 })}
               </div>
             ) : (
-              <div className="text-center py-16">
-                <Trophy className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">No results found</h3>
-                <p className="text-muted-foreground">
-                  Try adjusting your search terms or filters
+              <div className="text-center py-20 animate-fade-in">
+                <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-secondary rounded-full mb-6 shadow-lg">
+                  <Trophy className="h-12 w-12 text-muted-foreground" />
+                </div>
+                <h3 className="text-2xl font-semibold mb-3">No results found</h3>
+                <p className="text-lg text-muted-foreground max-w-md mx-auto">
+                  Try adjusting your search terms or filters to find the results you're looking for
                 </p>
               </div>
             )}
@@ -238,13 +248,19 @@ const Index = () => {
 
         {/* Empty State */}
         {!loading && !error && data.length === 0 && (
-          <div className="text-center py-16">
-            <Trophy className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">No data available</h3>
-            <p className="text-muted-foreground mb-4">
+          <div className="text-center py-20 animate-fade-in">
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-secondary rounded-full mb-6 shadow-lg">
+              <Trophy className="h-12 w-12 text-muted-foreground" />
+            </div>
+            <h3 className="text-2xl font-semibold mb-3">No data available</h3>
+            <p className="text-lg text-muted-foreground mb-6 max-w-md mx-auto">
               Check your Google Apps Script URL and ensure it returns valid CSV data
             </p>
-            <Button onClick={() => setIsConfigured(false)} variant="outline">
+            <Button 
+              onClick={() => setIsConfigured(false)} 
+              variant="outline"
+              className="glass-morphism hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+            >
               <Settings className="h-4 w-4 mr-2" />
               Reconfigure Data Source
             </Button>
@@ -253,9 +269,12 @@ const Index = () => {
       </div>
 
       {/* Footer */}
-      <footer className="text-center py-8 mt-16 border-t border-border bg-card/50">
-        <p className="text-sm text-muted-foreground">
-          © 2025 Fest Results Showcase. Powered by Google Sheets.
+      <footer className="text-center py-12 mt-20 border-t border-border/50 glass-morphism">
+        <p className="text-base text-muted-foreground">
+          © 2025 Fest Results Showcase. 
+          <span className="font-semibold bg-gradient-primary bg-clip-text text-transparent ml-1">
+            Powered by Google Sheets
+          </span>
         </p>
       </footer>
     </div>
