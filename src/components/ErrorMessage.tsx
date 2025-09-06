@@ -9,19 +9,19 @@ interface ErrorMessageProps {
 
 export const ErrorMessage = ({ message, onRetry }: ErrorMessageProps) => {
   return (
-    <div className="max-w-2xl mx-auto">
-      <Alert variant="destructive" className="border-destructive/50">
+    <div className="max-w-2xl mx-auto py-8">
+      <Alert variant="destructive" className="border-destructive/50 glass rounded-2xl p-8">
         <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Error Loading Results</AlertTitle>
-        <AlertDescription className="mt-2">
+        <AlertTitle className="text-lg font-semibold">Error Loading Results</AlertTitle>
+        <AlertDescription className="mt-3 text-base leading-relaxed">
           {message}
         </AlertDescription>
         {onRetry && (
-          <div className="mt-4">
+          <div className="mt-6">
             <Button 
-              variant="outline" 
+              variant="gradient" 
               onClick={onRetry}
-              className="border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground"
+              size="lg"
             >
               <RefreshCw className="h-4 w-4 mr-2" />
               Try Again

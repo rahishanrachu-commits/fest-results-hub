@@ -68,18 +68,25 @@ export default {
         "gradient-primary": "var(--gradient-primary)",
         "gradient-card": "var(--gradient-card)",
         "gradient-subtle": "var(--gradient-subtle)",
+        "gradient-mesh": "var(--gradient-mesh)",
       },
       boxShadow: {
         "elegant": "var(--shadow-elegant)",
         "card": "var(--shadow-card)",
+        "hover": "var(--shadow-hover)",
+        "glass": "var(--shadow-glass)",
       },
       transitionProperty: {
         "smooth": "var(--transition-smooth)",
+        "bounce": "var(--transition-bounce)",
+        "spring": "var(--transition-spring)",
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        xl: "var(--radius-lg)",
+        "2xl": "var(--radius-xl)",
       },
       keyframes: {
         "accordion-down": {
@@ -98,10 +105,37 @@ export default {
             height: "0",
           },
         },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        "pulse-modern": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.7" },
+        },
+        "pulse-dot": {
+          "0%": { transform: "scale(0.95)", opacity: "1" },
+          "70%": { transform: "scale(1)", opacity: "0.7" },
+          "100%": { transform: "scale(0.95)", opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "float": "float 6s ease-in-out infinite",
+        "shimmer": "shimmer 2s infinite",
+        "pulse-modern": "pulse-modern 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "pulse-dot": "pulse-dot 2s infinite",
+      },
+      animationDelay: {
+        "100": "100ms",
+        "150": "150ms",
+        "200": "200ms",
+        "300": "300ms",
       },
     },
   },

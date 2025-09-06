@@ -49,61 +49,67 @@ const getPositionIcon = (position: string) => {
 
 export const ResultCard = ({ programCode, programName, programSection, entries }: ResultCardProps) => {
   return (
-    <Card className="overflow-hidden shadow-card hover:shadow-elegant transition-all duration-300 hover:-translate-y-1 border-border">
-      <CardHeader className="bg-gradient-primary text-primary-foreground p-6">
+    <Card className="overflow-hidden shadow-card hover:shadow-elegant transition-all duration-500 hover:-translate-y-2 border-border/50 backdrop-blur-sm bg-card/80">
+      <CardHeader className="bg-gradient-card text-primary-foreground p-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-white/20 rounded-lg">
+          <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm border border-white/20">
             <Users className="h-6 w-6" />
           </div>
-          <div>
-            <h2 className="text-xl font-bold tracking-wide">{programName}</h2>
-            <p className="text-primary-foreground/80 text-sm">
+          <div className="flex-1 min-w-0">
+            <h2 className="text-xl font-bold tracking-wide truncate">{programName}</h2>
+            <p className="text-primary-foreground/90 text-sm font-medium">
               {programCode} • {programSection}
             </p>
+          </div>
+          <div className="status-indicator">
+            <Badge variant="secondary" className="bg-white/20 text-white border-white/30 backdrop-blur-sm">
+              {entries.length} Results
+            </Badge>
           </div>
         </div>
       </CardHeader>
       
       <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-muted/50 border-b">
+        <div className="overflow-x-auto scrollbar-thin">
+          <table className="w-full text-sm relative">
+            <thead className="bg-gradient-to-r from-muted/30 to-muted/50 border-b border-border/50 backdrop-blur-sm">
               <tr>
-                <th className="px-4 py-3 text-left font-semibold text-muted-foreground">Pos</th>
-                <th className="px-4 py-3 text-left font-semibold text-muted-foreground">Chest No</th>
-                <th className="px-4 py-3 text-left font-semibold text-muted-foreground">Candidate</th>
-                <th className="px-4 py-3 text-left font-semibold text-muted-foreground">Team</th>
-                <th className="px-4 py-3 text-right font-semibold text-muted-foreground">Grade</th>
+                <th className="px-4 py-4 text-left font-semibold text-muted-foreground text-xs uppercase tracking-wider">Pos</th>
+                <th className="px-4 py-4 text-left font-semibold text-muted-foreground text-xs uppercase tracking-wider">Chest No</th>
+                <th className="px-4 py-4 text-left font-semibold text-muted-foreground text-xs uppercase tracking-wider">Candidate</th>
+                <th className="px-4 py-4 text-left font-semibold text-muted-foreground text-xs uppercase tracking-wider">Team</th>
+                <th className="px-4 py-4 text-right font-semibold text-muted-foreground text-xs uppercase tracking-wider">Grade</th>
               </tr>
             </thead>
             <tbody>
               {entries.map((entry, index) => (
                 <tr 
                   key={`${entry.chestNo}-${index}`}
-                  className="border-b border-border last:border-b-0 hover:bg-muted/30 transition-colors duration-200"
+                  className="border-b border-border/30 last:border-b-0 hover:bg-gradient-to-r hover:from-muted/20 hover:to-transparent transition-all duration-300 group"
                 >
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-4">
                     <div className="flex items-center gap-2">
                       {getPositionIcon(entry.position)}
-                      <span className="font-bold text-lg text-primary">
+                      <span className="font-bold text-lg text-primary group-hover:scale-110 transition-transform duration-200">
                         {entry.position || '-'}
                       </span>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-muted-foreground font-medium">
+                  <td className="px-4 py-4 text-muted-foreground font-medium font-mono text-sm">
                     {entry.chestNo}
                   </td>
-                  <td className="px-4 py-3 font-medium text-foreground">
+                  <td className="px-4 py-4 font-semibold text-foreground">
                     {entry.candidateName}
                   </td>
-                  <td className="px-4 py-3 text-muted-foreground">
+                  <td className="px-4 py-4 text-muted-foreground font-medium">
                     {entry.teamCode}
                   </td>
-                  <td className="px-4 py-3 text-right">
+                  <td className="px-4 py-4 text-right">
                     {entry.grade && (
                       <Badge 
-                        variant="outline" 
-                        className={`font-semibold ${getGradeColor(entry.grade)}`}
+                        variant="outline"
+                        className={`font-semibold transition-all duration-200 hover:scale-110 ${getGradeColor(entry.grade)}`}
                       >
                         {entry.grade}
                       </Badge>

@@ -144,41 +144,41 @@ const Index = () => {
 
   // Main application
   return (
-    <div className="min-h-screen bg-gradient-subtle">
+    <div className="min-h-screen bg-animated relative overflow-hidden">
       {/* Pattern overlay */}
-      <div className="fixed inset-0 opacity-20 pointer-events-none">
+      <div className="fixed inset-0 opacity-30 pointer-events-none">
         <div 
           className="w-full h-full"
           style={{
-            backgroundImage: 'radial-gradient(circle, hsl(238, 75%, 59%, 0.1) 1px, transparent 1px)',
-            backgroundSize: '24px 24px'
+            backgroundImage: 'radial-gradient(circle, hsl(262, 83%, 58%, 0.15) 1px, transparent 1px)',
+            backgroundSize: '32px 32px'
           }}
         />
       </div>
 
       <div className="relative container mx-auto p-4 sm:p-6 lg:p-8">
         {/* Header */}
-        <header className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-primary rounded-xl mb-4">
-            <Trophy className="h-8 w-8 text-white" />
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-primary rounded-2xl mb-6 shadow-elegant">
+            <Trophy className="h-10 w-10 text-white" />
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
+          <h1 className="text-5xl sm:text-6xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4 tracking-tight">
             Fest Results
           </h1>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-xl text-muted-foreground font-medium">
             Live competition results from Google Sheets
           </p>
           
           {/* Stats */}
           {data.length > 0 && (
-            <div className="flex justify-center gap-4 mt-6">
-              <Badge variant="secondary" className="px-4 py-2 text-sm">
+            <div className="flex justify-center gap-4 mt-8">
+              <Badge variant="gradient" className="px-6 py-3 text-sm font-medium shadow-lg">
                 {Object.keys(groupedData).length} Programs
               </Badge>
-              <Badge variant="secondary" className="px-4 py-2 text-sm">
+              <Badge variant="gradient" className="px-6 py-3 text-sm font-medium shadow-lg">
                 {filteredData.length} Results
               </Badge>
-              <Badge variant="secondary" className="px-4 py-2 text-sm">
+              <Badge variant="gradient" className="px-6 py-3 text-sm font-medium shadow-lg">
                 {teams.length} Teams
               </Badge>
             </div>
@@ -210,7 +210,7 @@ const Index = () => {
 
             {/* Results Grid */}
             {Object.keys(groupedData).length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
                 {Object.entries(groupedData).map(([programCode, entries]) => {
                   const programInfo = entries[0];
                   return (
@@ -225,12 +225,14 @@ const Index = () => {
                 })}
               </div>
             ) : (
-              <div className="text-center py-16">
-                <Trophy className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">No results found</h3>
-                <p className="text-muted-foreground">
+              <div className="text-center py-20">
+                <div className="glass rounded-2xl p-12 max-w-md mx-auto">
+                  <Trophy className="h-20 w-20 text-muted-foreground mx-auto mb-6" />
+                  <h3 className="text-2xl font-semibold mb-4">No results found</h3>
+                  <p className="text-muted-foreground text-lg">
                   Try adjusting your search terms or filters
                 </p>
+                </div>
               </div>
             )}
           </>
@@ -238,23 +240,25 @@ const Index = () => {
 
         {/* Empty State */}
         {!loading && !error && data.length === 0 && (
-          <div className="text-center py-16">
-            <Trophy className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">No data available</h3>
-            <p className="text-muted-foreground mb-4">
+          <div className="text-center py-20">
+            <div className="glass rounded-2xl p-12 max-w-lg mx-auto">
+              <Trophy className="h-20 w-20 text-muted-foreground mx-auto mb-6" />
+              <h3 className="text-2xl font-semibold mb-4">No data available</h3>
+              <p className="text-muted-foreground mb-6 text-lg">
               Check your Google Apps Script URL and ensure it returns valid CSV data
             </p>
-            <Button onClick={() => setIsConfigured(false)} variant="outline">
-              <Settings className="h-4 w-4 mr-2" />
-              Reconfigure Data Source
-            </Button>
+              <Button onClick={() => setIsConfigured(false)} variant="gradient" size="lg">
+                <Settings className="h-5 w-5 mr-2" />
+                Reconfigure Data Source
+              </Button>
+            </div>
           </div>
         )}
       </div>
 
       {/* Footer */}
-      <footer className="text-center py-8 mt-16 border-t border-border bg-card/50">
-        <p className="text-sm text-muted-foreground">
+      <footer className="text-center py-12 mt-20 border-t border-border/30 glass">
+        <p className="text-muted-foreground">
           © 2025 Fest Results Showcase. Powered by Google Sheets.
         </p>
       </footer>
